@@ -1,0 +1,13 @@
+{
+  "folders": [
+    {
+      "name": "global-skills",
+      "path": "."
+    },
+    {
+      "name": "work-skills",
+      "path": "work-skills"
+    }
+  ],
+  "settings": {}
+}

@@ -1,0 +1,85 @@
+---
+name: copywriting
+description: >
+  Brian Dean style copywriting for Vikas Thakur brands (rockingweb.com.au, selfcareshop.com.au,
+  invoicr.com.au, Vikas Thakur personal brand). Australian audience. GEO-optimised for AI citation.
+  Use when writing blog posts, landing pages, or any brand content.
+---
+
+## Core
+
+Slippery slide: each sentence earns the next. Every piece = AIDA (Attention, Interest, Desire, Action).
+Benefits not features. Write to one person with one problem. Show don't declare.
+
+## Headlines
+
+- Lead with most specific number or finding
+- Crooked numbers (57, 8,913, 41.9%) — more believable than round
+- Under 60 chars for SERP
+- Add year for benchmark/stats content
+- No question formats for benchmark content (kills CTR)
+- Every headline passes WIIFM test
+
+## Lead
+
+8 sentences max. Hook first: shocking stat, mini-story, or bold promise. Proof + Preview structure. Never open with "In today's world..." or scene-setting.
+
+## Body
+
+Short sentences. Active voice. Mix lengths for rhythm. Never three long sentences in a row.
+Subheadings every 200-300 words. Takeaway line at end of each section. No big words: "use" not "utilise", "show" not "demonstrate", "help" not "facilitate".
+Counter objections before reader thinks them. Create mental movies over abstract claims.
+
+## Never use
+
+Em dashes, double dashes. Restructure sentence instead.
+Bold for emphasis within body. Use stronger word choice instead.
+Australian English: organisation, realise, optimise, colour, favour, centre.
+
+Banned words — AI filler: Certainly / Indeed / Obviously / Clearly / Undoubtedly / Furthermore / Moreover / Additionally / Consequently / Therefore / Thus / Hence
+
+Banned words — hype/vague: transformation / leverage / harness / facilitate / enable / empower / streamline / implement / deploy / iterate / orchestrate / curate / synergize / robust / holistic / comprehensive / pivotal / seamless / innovative / cutting-edge / groundbreaking / scalable / synergy / paradigm shift / game-changer
+
+Banned openers: Nevertheless / Nonetheless / However / On the other hand / In contrast / Interestingly / Notably / Significantly / Importantly / Crucially / In conclusion / To summarize / All in all / At the end of the day / In today's world
+
+Banned intensifiers: Actually / Frankly / Honestly / Truly / Genuinely / Utterly / Completely / Entirely / Totally / Thoroughly / Particularly / Especially / Perfectly / Ideally
+
+Banned hype verbs: Elevate / Revolutionise / Unlock / Empower / Transform — never use "from X to Y" as headline structure.
+
+## Brand Voice
+
+- Vikas Thakur: Direct, honest, 16yr practitioner. No hype.
+- selfcareshop.com.au: Warm, evidence-based wellness. Never preachy.
+- rockingweb.com.au: Blunt, data-backed, Rockingham roots. Results not promises.
+- invoicr.com.au: Practical, time-saving, built for admin-haters.
+
+## GEO (rockingweb.com.au posts only)
+
+Answer capsule in first 150 words: one paragraph, max 25 words, stat + year + geography.
+Cite sources inline by name: "According to WordStream's 2025 dataset (n=16,446 campaigns)." Not "according to a study."
+Exact numbers: "$5.26" not "around $5". "41.9%" not "about 42%".
+Key Takeaways bullets (5-8, each with a number) in first 200 words.
+State data date in first paragraph AND in title. Tables beat prose for LLM extraction.
+
+## Format (blog posts)
+
+1. Title (reporter-hook stat + year, under 60 chars)
+2. Key Takeaways box (5-8 bullets, each with a number)
+3. Answer capsule (2-3 sentences, LLM extraction target)
+4. Hook intro (8 sentences max, AIDA)
+5. H2 sections with takeaway lines
+6. Tables for all comparative/benchmark data (max 4 columns, labelled headers, sort by value)
+7. CTA at end
+
+Reporter-hook stat must appear: in title, in Key Takeaways, in first 50 words, in a labelled table row.
+
+## Mermaid (blog posts only, never landing pages)
+
+No `%%{init}%%` headers or themeVariables. Default colours only. No pure white or near-black fills.
+First diagram within 300 words. One per 500-800 words. Critical diagram at 50% scroll depth.
+Pie: max 5 slices, order largest to smallest from 12 o'clock. Bar: sort by value. Line: annotate peaks/troughs.
+Max 7 data points per chart.
+
+## Landing Pages (rockingweb.com.au)
+
+PAS formula (Problem, Agitate, Solve). Social proof above fold. Single CTA with specific outcome copy (not "Get Started"). FAQ to squash objections. No pricing walls — anchor to value.
