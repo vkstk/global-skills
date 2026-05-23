@@ -28,3 +28,17 @@ See `.cursor/rules/copywriting.mdc` for full rules. Key: AIDA structure, benefit
 
 - `caveman` — ultra-compressed comms, invoke with "caveman mode" or `/caveman`
 - `copywriting` — Brian Dean style content for rockingweb / selfcareshop / invoicr / Vikas Thakur
+
+### Debugging skills (framework-specific — load only when task needs it)
+
+- `debug-nestjs` — OTel bootstrap, Pino correlation, manual spans, Prisma tracing, DI errors, remote attach
+- `debug-nextjs` — App Router OTel, undici fetch tracing, hydration diff workflow, Edge runtime
+- `debug-remix` — Hydration mismatches, ErrorBoundary/HydrateFallback, loader errors, @sentry/remix
+- `debug-nodejs` — Inspector attach (Docker/K8s/SSH), clinic.js perf, heap profiling, event loop lag, bisect
+- `debug-python` — pytest recipes, pdb/ipdb, rich tracebacks, mypy, ruff, structured output
+
+### Runtime signal skills (on-demand — no MCP server required)
+
+- `query-observability` — Query OpenObserve logs/traces via `o2_search.sh`; OSS-compatible
+- `inspect-browser` — Playwright headless capture: console errors, network failures, screenshot, page HTML
+- `query-db` — Read-only PostgreSQL via `psql_ro.sh`; rejects non-SELECT; safe for agent use
