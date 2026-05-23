@@ -46,3 +46,4 @@ See `.cursor/rules/copywriting.mdc` for full rules. Key: AIDA structure, benefit
 ### Workspace sync skill
 
 - `sync-skills` — Symlink all global skills into target repos; configured via `.env` at repo root
+- `create-agents-md` — Generate a dense router-based AGENTS.md for any repo; detects frameworks, maps skills
