@@ -39,6 +39,10 @@ See `.cursor/rules/copywriting.mdc` for full rules. Key: AIDA structure, benefit
 
 ### Runtime signal skills (on-demand — no MCP server required)
 
-- `query-observability` — Query OpenObserve logs/traces via `o2_search.sh`; OSS-compatible
+- `query-observability` — Query OpenObserve logs/traces via `o2_search.py`; OSS-compatible
 - `inspect-browser` — Playwright headless capture: console errors, network failures, screenshot, page HTML
-- `query-db` — Read-only PostgreSQL via `psql_ro.sh`; rejects non-SELECT; safe for agent use
+- `query-db` — Read-only PostgreSQL via `psql_ro.py`; rejects non-SELECT; safe for agent use
+
+### Workspace sync skill
+
+- `sync-skills` — Symlink all global skills into target repos; configured via `.env` at repo root
