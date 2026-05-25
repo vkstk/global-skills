@@ -12,10 +12,30 @@ description: >
 
 Run `python psql_ro.py "<SQL>"`. Output is JSON (one object per row).
 
+## Forwood One (`ehs-ai-platform`) — connection
+
+**Inside devcontainer** (preferred for agents):
+
+```bash
+export DB_HOST="root-rw.db"
+export DB_PORT="5432"
+export DB_NAME="root"
+export DB_READONLY_USER="postgres"
+export DB_READONLY_PASS="password"
+```
+
+**Ad-hoc psql** (investigation only, same as conversation-rules):
+
+```bash
+psql postgresql://postgres:password@root-rw.db:5432/root -c "SELECT ..."
+```
+
+From host OS (published port): `localhost:5432` if `ROOT_DB_PUBLISH_PORT` unchanged.
+
 ## Setup
 
 ```bash
-# Set these in your shell or .env — use a dedicated read-only service account
+# Generic — dedicated read-only service account
 export DB_HOST="localhost"
 export DB_PORT="5432"
 export DB_NAME="myapp"

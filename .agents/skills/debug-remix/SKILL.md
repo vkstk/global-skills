@@ -9,17 +9,27 @@ description: >
 
 # Debugging Remix
 
+## Forwood One (`ehs-ai-platform`) — ports
+
+| What | Port / host |
+| --- | --- |
+| Web (browser) | **5173** — `https://<tenant>.dev.platform.forwoodsafety.com:5173` or `http://localhost:5173` |
+| API (direct) | **4000** — `http://localhost:4000/api` (`API_BASE_URL` / `VITE_API_PORT`) |
+| OTLP (Remix server) | **gRPC 4317** — `web/app/services/observability/otel.server.ts` |
+
+Build for hydration repro: `pnpm --filter @forwood/ehs-web build && pnpm --filter @forwood/ehs-web start` (not generic `pnpm build` at repo root).
+
 ## 1 — Hydration mismatches
 
 **Rule: always reproduce in a production build.** Remix dev mode masks timing issues.
 
 ```bash
-pnpm build && pnpm start
+pnpm --filter @forwood/ehs-web build && pnpm --filter @forwood/ehs-web start
 ```
 
 **Deterministic workflow:**
 
-1. `curl http://localhost:3000/path > server.html` — capture server-rendered HTML.
+1. `curl -k https://devtenant1.dev.platform.forwoodsafety.com:5173/path > server.html` (or `http://localhost:5173/path`) — server HTML.
 2. In DevTools console: `copy(document.body.innerHTML)` — capture client HTML after hydration.
 3. Diff the two (`diff server.html client.html` or diffchecker.com).
 4. Binary-search the route component tree: replace halves with `<div>placeholder</div>` until the
@@ -182,10 +192,9 @@ node -r ./instrumentation.js ./build/server/index.js
 ## 8 — Stop-hook commands
 
 ```bash
-pnpm typecheck    # tsc --noEmit
-pnpm lint:json    # eslint . --format json
-pnpm test         # vitest run --reporter=basic --no-watch
-pnpm build        # catches route export and loader type errors tsc misses
+pnpm --filter @forwood/ehs-web typecheck
+pnpm --filter @forwood/ehs-web test -- <focused-test>
+pnpm --filter @forwood/ehs-web build   # catches route/loader issues tsc misses
 ```
 
 ## 9 — Remix-specific gotchas

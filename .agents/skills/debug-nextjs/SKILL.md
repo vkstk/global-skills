@@ -10,6 +10,8 @@ description: >
 
 # Debugging Next.js
 
+> **Forwood One (`ehs-ai-platform`)** uses **Remix** on port **5173**, API **4000**, OTLP **gRPC 4317** — see `debug-remix` / `debug-nestjs`. This skill applies only when working on a Next.js app.
+
 ## 1 — OTel bootstrap (App Router)
 
 Next.js supports `instrumentation.ts` at the project root (or `src/instrumentation.ts`).
@@ -36,7 +38,7 @@ import { UndiciInstrumentation } from '@opentelemetry/instrumentation-undici';
 
 const sdk = new NodeSDK({
   traceExporter: new OTLPTraceExporter({
-    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? 'http://localhost:4318/v1/traces',
+    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? 'http://localhost:4318/v1/traces',  // HTTP; Forwood uses gRPC :4317
   }),
   instrumentations: [
     getNodeAutoInstrumentations(),

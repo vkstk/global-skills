@@ -10,6 +10,18 @@ description: >
 
 # Debugging Node.js / TypeScript
 
+## Forwood One (`ehs-ai-platform`) — ports
+
+| What | Port |
+| --- | --- |
+| Web | **5173** |
+| API | **4000** (devcontainer); **3000** only if `api/.env` `API_PORT=3000` outside compose |
+| OTLP gRPC | **4317** (not 4318 unless using HTTP OTLP deliberately) |
+| OpenObserve | **HTTPS** remote — no local `:8888` collector unless you run one |
+| Inspector | **9229** |
+
+Load test API: `autocannon -c 100 -d 30 http://localhost:4000/api/health` (adjust path).
+
 ## 1 — Debugger attach hierarchy (choose the right level)
 
 | Situation | Approach |
@@ -63,7 +75,7 @@ clinic heapprofiler -- node server.js
 
 Generate load while clinic is running:
 ```bash
-autocannon -c 100 -d 30 http://localhost:3000/api/endpoint
+autocannon -c 100 -d 30 http://localhost:4000/api/endpoint
 ```
 
 ## 4 — Memory leak hunting
@@ -170,7 +182,7 @@ Encode these as ESLint rules so the agent catches them at edit time:
 ## 10 — OTel pipeline self-check (when spans vanish)
 
 1. Add `ConsoleSpanExporter` temporarily → confirm spans exist in SDK.
-2. `curl http://localhost:8888/metrics | grep otelcol_receiver_accepted_spans` → confirm Collector receives.
+2. If using a sidecar OTel Collector: `curl http://localhost:8888/metrics | grep otelcol_receiver_accepted_spans`. **Forwood One** exports gRPC straight to OpenObserve (HTTPS) — skip 8888 unless you run a collector locally.
 3. Check `otelcol_exporter_sent_spans` vs `otelcol_exporter_send_failed_spans`.
 4. Verify port: **4317 = gRPC**, **4318 = HTTP/protobuf** — mixing kills the pipeline silently.
 5. Enable `debug` exporter in Collector config with `verbosity: detailed` to see every span.

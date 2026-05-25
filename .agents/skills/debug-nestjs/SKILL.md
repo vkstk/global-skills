@@ -9,6 +9,19 @@ description: >
 
 # Debugging NestJS
 
+## Forwood One (`ehs-ai-platform`) — ports
+
+| What | Port / host |
+| --- | --- |
+| API (Nest) | **4000** devcontainer (`API_PORT`); standalone `api/.env` may use **3000** |
+| Web (Remix) | **5173** — browser hits Vite; API via proxy to **4000** |
+| Postgres | **root-rw.db:5432** from devcontainer |
+| OTLP | **gRPC 4317** — `api/src/modules/common/observability/otel-init.ts`, first import in `main.ts` |
+| OpenObserve | **HTTPS** `OTEL_EXPORTER_OTLP_ENDPOINT` (e.g. `https://o2test.central.forwoodsafety.com`) — no `/v1/traces` path |
+| Inspector | **9229** attach only |
+
+Verify: `pnpm --filter @forwood/ehs-api type-check` + focused Jest (not Vitest).
+
 ## 1 — OpenTelemetry bootstrap (critical: load BEFORE main.ts)
 
 ```ts
@@ -26,7 +39,9 @@ const sdk = new NodeSDK({
     [ATTR_SERVICE_VERSION]: process.env.npm_package_version ?? '0.0.0',
   }),
   traceExporter: new OTLPTraceExporter({
-    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? 'http://localhost:4318/v1/traces',
+    // HTTP OTLP: 'http://localhost:4318/v1/traces'
+    // Forwood One: OTLP/gRPC port 4317, base URL without path — see otel-init.ts (OTLPGrpcTraceExporter)
+    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? 'http://openobserve:4317',
   }),
   instrumentations: [
     getNodeAutoInstrumentations(),
@@ -191,13 +206,20 @@ pnpm lint:json    # eslint . --format json -o .agent/lint.json
 pnpm test         # vitest run --reporter=basic --no-watch
 ```
 
+**Forwood One:**
+
+```bash
+pnpm --filter @forwood/ehs-api type-check
+pnpm --filter @forwood/ehs-api test -- <focused-spec>
+```
+
 Run in this order before declaring done. Typecheck belongs in Stop hook, not per-edit.
 
 ## 9 — Common NestJS gotchas
 
 | Symptom | Likely cause | Fix |
 |---|---|---|
-| Spans missing | `instrumentation.ts` loaded after `main.ts` | Move to `-r ./instrumentation.js` |
+| Spans missing | OTel init after app modules | Forwood: `import "./modules/common/observability/otel-init"` first in `api/src/main.ts` |
 | `trace_id` absent in logs | `PinoInstrumentation` not in SDK | Add to `instrumentations` array |
 | DI error on `Scope.REQUEST` | Breaks singleton OTel span propagation | Use `REQUEST` scope only when essential |
 | Slow Prisma queries invisible | No `$on('query')` listener | Wire query event listener |

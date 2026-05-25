@@ -10,6 +10,16 @@ description: >
 
 # Browser Inspection with Playwright
 
+## Forwood One (`ehs-ai-platform`) — URLs
+
+Use **5173**, not 3000. Prefer tenant HTTPS (matches `APP_BASE_URL`):
+
+- `https://devtenant1.dev.platform.forwoodsafety.com:5173/...`
+- `https://root.dev.platform.forwoodsafety.com:5173/...`
+- Fallback: `http://localhost:5173/...`
+
+API calls from the browser go to the same host (Vite proxy) or directly `http://localhost:4000/api`.
+
 ## Setup
 
 ```bash
@@ -22,10 +32,10 @@ npx playwright install chromium
 
 ```bash
 # Capture console errors, network failures, HTML, and screenshot
-node capture.mjs https://localhost:3000/path
+node capture.mjs https://devtenant1.dev.platform.forwoodsafety.com:5173/app/verifications
 
 # With auth cookie (paste from DevTools → Application → Cookies)
-AUTH_COOKIE="session=abc123; Path=/; HttpOnly" node capture.mjs https://localhost:3000/dashboard
+AUTH_COOKIE="session=abc123; Path=/; HttpOnly" node capture.mjs https://devtenant1.dev.platform.forwoodsafety.com:5173/dashboard
 
 # Output is written to .agent/browser-capture/ and summary printed to stdout
 ```
@@ -49,7 +59,7 @@ which API call is causing a client-side blank screen or loading spinner.
 **page.html vs view-source** — if they differ, there is a hydration issue. Diff them:
 
 ```bash
-curl http://localhost:3000/path > .agent/browser-capture/server.html
+curl -k https://devtenant1.dev.platform.forwoodsafety.com:5173/path > .agent/browser-capture/server.html
 diff .agent/browser-capture/server.html .agent/browser-capture/page.html
 ```
 
