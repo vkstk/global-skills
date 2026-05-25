@@ -16,8 +16,7 @@ description: >
 | API (Nest) | **4000** devcontainer (`API_PORT`); standalone `api/.env` may use **3000** |
 | Web (Remix) | **5173** — browser hits Vite; API via proxy to **4000** |
 | Postgres | **root-rw.db:5432** from devcontainer |
-| OTLP | **gRPC 4317** — `api/src/modules/common/observability/otel-init.ts`, first import in `main.ts` |
-| OpenObserve | **HTTPS** `OTEL_EXPORTER_OTLP_ENDPOINT` (e.g. `https://o2test.central.forwoodsafety.com`) — no `/v1/traces` path |
+| OTLP / OpenObserve | **`http://o2.central.forwoodsafety.com`** — `otel-investigate` skill (`OTEL_PROD`); export: `OTEL_EXPORTER_OTLP_ENDPOINT` in `api/.env`; init: `api/src/modules/common/observability/otel-init.ts` first in `main.ts` |
 | Inspector | **9229** attach only |
 
 Verify: `pnpm --filter @forwood/ehs-api type-check` + focused Jest (not Vitest).
@@ -39,9 +38,8 @@ const sdk = new NodeSDK({
     [ATTR_SERVICE_VERSION]: process.env.npm_package_version ?? '0.0.0',
   }),
   traceExporter: new OTLPTraceExporter({
-    // HTTP OTLP: 'http://localhost:4318/v1/traces'
-    // Forwood One: OTLP/gRPC port 4317, base URL without path — see otel-init.ts (OTLPGrpcTraceExporter)
-    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? 'http://openobserve:4317',
+    // Forwood One: OTEL_EXPORTER_OTLP_ENDPOINT from api/.env; host http://o2.central.forwoodsafety.com — see otel-investigate skill
+    url: process.env.OTEL_EXPORTER_OTLP_ENDPOINT ?? 'http://o2.central.forwoodsafety.com',
   }),
   instrumentations: [
     getNodeAutoInstrumentations(),

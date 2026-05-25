@@ -12,12 +12,11 @@ description: >
 
 ## Forwood One (`ehs-ai-platform`) — ports
 
-| What | Port |
+| What | Port / endpoint |
 | --- | --- |
 | Web | **5173** |
 | API | **4000** (devcontainer); **3000** only if `api/.env` `API_PORT=3000` outside compose |
-| OTLP gRPC | **4317** (not 4318 unless using HTTP OTLP deliberately) |
-| OpenObserve | **HTTPS** remote — no local `:8888` collector unless you run one |
+| OTLP / OpenObserve | **`http://o2.central.forwoodsafety.com`** — canonical host in `otel-investigate` skill (`OTEL_PROD` in `.env.release`); app export via `OTEL_EXPORTER_OTLP_ENDPOINT` in `api/.env` / `web/.env` |
 | Inspector | **9229** |
 
 Load test API: `autocannon -c 100 -d 30 http://localhost:4000/api/health` (adjust path).
@@ -181,13 +180,22 @@ Encode these as ESLint rules so the agent catches them at edit time:
 
 ## 10 — OTel pipeline self-check (when spans vanish)
 
-1. Add `ConsoleSpanExporter` temporarily → confirm spans exist in SDK.
-2. If using a sidecar OTel Collector: `curl http://localhost:8888/metrics | grep otelcol_receiver_accepted_spans`. **Forwood One** exports gRPC straight to OpenObserve (HTTPS) — skip 8888 unless you run a collector locally.
-3. Check `otelcol_exporter_sent_spans` vs `otelcol_exporter_send_failed_spans`.
-4. Verify port: **4317 = gRPC**, **4318 = HTTP/protobuf** — mixing kills the pipeline silently.
-5. Enable `debug` exporter in Collector config with `verbosity: detailed` to see every span.
+**Forwood One** — use `otel-investigate` as source of truth (not local `:4317`):
 
-Simulate load without touching app:
+```bash
+# Credentials: .env.release → OTEL_PROD, OTEL_PROD_EMAIL, OTEL_PROD_AUTH
+# Host: http://o2.central.forwoodsafety.com (see otel-investigate SKILL.md)
+python3 .personal/forwood-one-tools/tools/.agents/skills/otel-investigate/scripts/check.py --org platform_testing --hours 6
+```
+
+Generic / other repos:
+
+1. Add `ConsoleSpanExporter` temporarily → confirm spans exist in SDK.
+2. Sidecar Collector: `curl http://localhost:8888/metrics | grep otelcol_receiver_accepted_spans`.
+3. Check `otelcol_exporter_sent_spans` vs `otelcol_exporter_send_failed_spans`.
+4. **4317 = gRPC**, **4318 = HTTP/protobuf** — mixing kills the pipeline silently.
+5. Collector `debug` exporter with `verbosity: detailed`.
+
 ```bash
 telemetrygen traces --otlp-endpoint localhost:4317 --rate 10 --duration 30s
 ```

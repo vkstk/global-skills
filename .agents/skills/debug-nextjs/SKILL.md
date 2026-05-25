@@ -10,7 +10,7 @@ description: >
 
 # Debugging Next.js
 
-> **Forwood One (`ehs-ai-platform`)** uses **Remix** on port **5173**, API **4000**, OTLP **gRPC 4317** — see `debug-remix` / `debug-nestjs`. This skill applies only when working on a Next.js app.
+> **Forwood One (`ehs-ai-platform`)** uses **Remix** on **5173**, API **4000**, OTLP host **`http://o2.central.forwoodsafety.com`** (`otel-investigate` skill) — see `debug-remix` / `debug-nestjs`. This skill applies only when working on a Next.js app.
 
 ## 1 — OTel bootstrap (App Router)
 

@@ -15,7 +15,7 @@ description: >
 | --- | --- |
 | Web (browser) | **5173** — `https://<tenant>.dev.platform.forwoodsafety.com:5173` or `http://localhost:5173` |
 | API (direct) | **4000** — `http://localhost:4000/api` (`API_BASE_URL` / `VITE_API_PORT`) |
-| OTLP (Remix server) | **gRPC 4317** — `web/app/services/observability/otel.server.ts` |
+| OTLP / OpenObserve | **`http://o2.central.forwoodsafety.com`** — `otel-investigate` skill; export: `web/.env` `OTEL_EXPORTER_OTLP_ENDPOINT`; `web/app/services/observability/otel.server.ts` |
 
 Build for hydration repro: `pnpm --filter @forwood/ehs-web build && pnpm --filter @forwood/ehs-web start` (not generic `pnpm build` at repo root).
 

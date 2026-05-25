@@ -13,20 +13,19 @@ Run `python o2_search.py <logs|traces> "<SQL>" <minutes_back>`. Output is JSON.
 
 ## Forwood One (`ehs-ai-platform`)
 
+Source of truth: **`otel-investigate`** skill — host **`http://o2.central.forwoodsafety.com`** (`OTEL_PROD` in `.env.release`).
+
 | What | Value |
 | --- | --- |
-| Query API | **HTTPS** — copy host from `OTEL_EXPORTER_OTLP_ENDPOINT` in `api/.env` / `web/.env` (e.g. `https://o2test.central.forwoodsafety.com`) |
-| OTLP ingest | **gRPC 4317** — app export, not browser |
-| Local org id | `39b45Bbee88aq28leqLyWqqhS1c` (see `OTEL_EXPORTER_OTLP_HEADERS` `organization-id`) |
-| Credentials | `.env.release` → `OTEL_PROD`, `OTEL_PROD_EMAIL`, `OTEL_PROD_AUTH` (dashboard verifier skill) |
-
-`O2_URL` = same host as OTLP endpoint (no `:4317` / `:4318` on HTTPS URLs).
+| `O2_URL` | Same host as `OTEL_PROD` — `http://o2.central.forwoodsafety.com` |
+| Credentials | `.env.release` → `OTEL_PROD`, `OTEL_PROD_EMAIL`, `OTEL_PROD_AUTH` |
+| App export | `OTEL_EXPORTER_OTLP_ENDPOINT` in `api/.env` / `web/.env` (must match env you are debugging) |
 
 ## Setup
 
 ```bash
 # Set these in your shell or .env (never commit secrets)
-export O2_URL="https://o2test.central.forwoodsafety.com"
+export O2_URL="http://o2.central.forwoodsafety.com"
 export O2_ORG="default"
 export O2_USER="admin@example.com"
 export O2_PASS="your-password"
